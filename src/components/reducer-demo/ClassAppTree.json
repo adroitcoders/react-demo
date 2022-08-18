@@ -1,0 +1,210 @@
+[
+    {
+        "classNo": 1,
+        "subjects": [
+            {
+                "type": "Primary",
+                "subName": "Science",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Plants",
+                        "teacher": "Jennie Crigler"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Our Universe",
+                        "teacher": "Wanda Maximoff"
+                    }
+                ]
+
+            },
+            {
+                "type": "Secondary",
+                "subName": "Mathematics",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Shapes and space",
+                        "teacher": "Graham smith"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Numbers",
+                        "teacher": "Thelma Egbert"
+                    }
+                ]
+            },
+            {
+                "type": "Optional",
+                "subName": "History",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "American History",
+                        "teacher": "Moneaka Elam"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Virginia Dynasty",
+                        "teacher": "Lela Dickey"
+                    }
+                ]
+            },
+            {
+                "type": "Technical",
+                "subName": "Computer",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Windows",
+                        "teacher": "Maydee Mallory"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Mac",
+                        "teacher": "Lois Pagett"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "classNo": 2,
+        "subjects": [
+            {
+                "type": "Primary",
+                "subName": "Science",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Plants",
+                        "teacher": "Jennie Crigler"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Weather and Seasons",
+                        "teacher": "Mary E. Elam"
+                    }
+                ]
+            },
+            {
+                "type": "Secondary",
+                "subName": "Mathematics",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Addition",
+                        "teacher": "Nannie Hopson"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Numbers",
+                        "teacher": "Thelma Herrington"
+                    }
+                ]
+            },
+            {
+                "type": "Optional",
+                "subName": "Geography",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Soil",
+                        "teacher": "Doris Wilson"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Atmosphere",
+                        "teacher": "Amy Smith"
+                    }
+                ]
+            },
+            {
+                "type": "Technical",
+                "subName": "Web Design",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "HTML",
+                        "teacher": "Ione Ransdell"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "CSS",
+                        "teacher": "Simon Jones"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "classNo": 3,
+        "subjects": [
+            {
+                "type": "Primary",
+                "subName": "English",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Verbs",
+                        "teacher": "Elgelina Atterbury"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Noun",
+                        "teacher": "Virginia Matteson"
+                    }
+                ]
+            },
+            {
+                "type": "Secondary",
+                "subName": "Science",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Air",
+                        "teacher": "Doris Threlkeld"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Light and Shadow",
+                        "teacher": "Elma Kemp"
+                    }
+                ]
+            },
+            {
+                "type": "Optional",
+                "subName": "Geography",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Rocks",
+                        "teacher": "Wynona James"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "Atmosphere",
+                        "teacher": "Amy Smith"
+                    }
+                ]
+            },
+            {
+                "type": "Technical",
+                "subName": "Coding",
+                "chapters": [
+                    {
+                        "chNo": 1,
+                        "chName": "Java",
+                        "teacher": "Andrew Garfield"
+                    },
+                    {
+                        "chNo": 2,
+                        "chName": "CSS",
+                        "teacher": "Simon Jones"
+                    }
+                ]
+            }
+        ]
+    }
+]
