@@ -9,6 +9,7 @@ const ReactPayPal = React.lazy(() => import('../components/payment-demo/componen
 const ReactStripe = React.lazy(() => import('../components/payment-demo/components/ReactStripe'));
 const ReactRazorpay = React.lazy(() => import('../components/payment-demo/components/ReactRazorpay'));
 const StripeSuccess = React.lazy(() => import('../components/payment-demo/components/StripeSuccess'));
+const Weather = React.lazy(() => import('../components/weather-forecasting/Weather'));
 
 const DemoPagesComponent = () => {
   // const renderMultiRoutes = ({ element: Element, paths, ...rest }: any) =>
@@ -23,6 +24,7 @@ const DemoPagesComponent = () => {
         <Route path="/payment/stripe" element={<ReactStripe />} />
         <Route path="/payment/razorpay" element={<ReactRazorpay />} />
         <Route path="/payment/stripe/success/invoice" element={<StripeSuccess />} />
+        <Route path="/weather" element={<Weather />} />
         {/* {renderMultiRoutes({
           paths: ['/payment', '/payment/paypal', '/payment/stripe', '/payment/razorpay', '/payment/stripe/success/invoice'],
           element: <PaymentDemo />,
