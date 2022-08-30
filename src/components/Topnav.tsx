@@ -40,7 +40,8 @@ const useStyles = makeStyles({
 
 const pages = [{page: 'Graphs', pageUri: '/graphs'},
   {page: 'Reducer', pageUri: '/reducer'},
-  {page: 'Payment', pageUri: '/payment'}
+  {page: 'Payment', pageUri: '/payment'},
+  {page: 'Weather', pageUri: 'weather'}
 ];
 const settings = ['Logout'];
 
