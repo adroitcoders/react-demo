@@ -5,22 +5,23 @@ import AirIcon from "@mui/icons-material/Air";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
+import Colors from './Colors';
+
 const classesSx = {
   box: {
-    backgroundColor: '#ff79aa',
+    backgroundColor: Colors.colorWindInfo,
     borderRadius: "12px",
-    margin: "16px",
     padding: "20px",
     marginBottom: '16px',
     "& span": {
       fontSize: "15px",
       fontWeight: 500,
-      color: "#FFFFFF",
+      color: Colors.colorPrimary,
     },
     boxShadow: 'rgb(99 99 99 / 20%) 0px 2px 8px 0px'
   },
   boxBlue: {
-    backgroundColor: "#ffb96a",
+    backgroundColor: Colors.colorContent,
     borderRadius: "12px",
     marginRight: "16px",
     padding: "20px",
@@ -36,19 +37,19 @@ const classesSx = {
   },
   icons: {
     marginRight: "8px",
-    fill: "#FFFFFF",
+    fill: Colors.colorPrimary,
     verticalAlign: "middle",
   },
   cityBox: {
     float: "right",
     "& svg": {
-      fill: "#FFFFFF",
+      fill: Colors.colorPrimary,
       verticalAlign: "bottom",
     },
   },
   cityName: {
     fontWeight: 500,
-    color: "#FFFFFF",
+    color: Colors.colorPrimary,
     fontSize: "16px",
   },
   cityTemp: {
@@ -58,7 +59,7 @@ const classesSx = {
 };
 
 const WindCard = (props: any) => {
-  console.log('wind card component >>> ')
+
   return (
     <>
       {props.popularCities && (

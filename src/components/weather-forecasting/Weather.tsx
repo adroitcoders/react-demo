@@ -14,19 +14,21 @@ import SunriseAndSunset from "./SunriseAndSunset";
 import AirQualityIndex from "./AirQualityIndex";
 import DayComponent from "./DayComponent";
 import WindCard from "./WindCard";
+import Search from "./Search";
 
 //services
 import { getCoordinates, getCurrentWeather } from './Services';
 
 //utils
 import { addCitiesToSession, timeStampConverter } from './utils';
-import Search from "./Search";
+
+import Colors from './Colors';
 
 const classesSx = {
   dayCard: {
     display: "inline-block",
     margin: "16px",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.colorPrimary,
     padding: "16px",
     width: "60px",
     borderRadius: "8px",
@@ -59,15 +61,18 @@ const classesSx = {
     marginRight: "8px",
   },
   timeText: {
-    color: "#84abfe",
+    color: Colors.colorContent,
     fontWeight: 900,
-    display: "inline-block",
+    fontSize: '36px',
+    lineHeight: '44px',
   },
   timeZone: {
-    fontWeight: 500
+    fontWeight: 500,
+    fontSize: '13px',
+    lineHeight: '21px'
   },
   wishText: {
-    color: "#84abfe",
+    color: Colors.colorContent,
     fontWeight: 900, 
     marginTop: "16px",
     '& svg': {
@@ -78,7 +83,10 @@ const classesSx = {
     }
   },
   dateString: {
-    marginLeft: '16px',
+    fontWeight: 700,
+    fontSize: '24px',
+    marginTop: '16px',
+    color: Colors.colorSecondary,
     '@media only screen and (max-width: 600px)': {
       marginTop: '8px',
       fontSize: "28px",
@@ -87,20 +95,25 @@ const classesSx = {
   },
   footer: {
     width: '100%',
-    textAlign: 'center', 
     marginLeft: '16px', 
-    marginTop: '48px', 
+    marginTop: '160px', 
     border: '2px solid grey',
-    padding: '24px',
+    padding: '16px',
     backgroundColor: 'aliceblue',
+    '& a': {
+      textDecoration: 'none',
+    },
   },
-  windCardBox: {
-    // '& div:nth-of-type(odd)': {
-    //   backgroundColor: '#ffb560'
-    // },
-    // '& div:nth-of-type(even)': {
-    //   backgroundColor: '#ff79aa'
-    // }
+  timeBoxStyles: {
+    border: `1px solid ${Colors.colorContent}`,
+    padding: '8px 12px',
+    borderRadius: '8px'
+  },
+  searchBox: {
+    float: 'right',
+    '@media only screen and (max-width: 600px)': {
+      width: '100%'
+    },
   },
 };
 
@@ -111,10 +124,11 @@ const Weather = () => {
   const [coordinates, setCoordinates] = React.useState({
     lat: 0,
     lon: 0,
+    name: '',
   });
 
   //variables
-  const defaultCity = "London";
+  const defaultCity = "Nashik";
   const d = new Date();
   
 
@@ -124,14 +138,16 @@ const Weather = () => {
       setCoordinates({
         lat: response.lat,
         lon: response.lon,
+        name: response.name,
       })
     })
   };
 
-  const searchCallback = (latitude: any, longitude: any) => {
+  const searchCallback = (latitude: any, longitude: any, name: string) => {
     setCoordinates({
       lat: latitude,
       lon: longitude,
+      name: name
     })
   }
 
@@ -156,7 +172,7 @@ const Weather = () => {
     let wishText = '';
     if (hr >= 0 && hr < 12) {
       wishText = 'Good Morning'
-    } else if (hr == 12) {
+    } else if (hr === 12) {
       wishText = 'Good Noon'
     } else if (hr >= 12 && hr <= 17) {
       wishText = 'Good Afternoon'
@@ -175,38 +191,43 @@ const Weather = () => {
   let parsedWeatherSession = weatherSession && JSON.parse(weatherSession)
 
   return (
+    <Box component='div' maxWidth='1488px' marginLeft='auto' marginRight='auto' padding='24px'>
     <Grid container spacing={2}>
       <Grid item md={8} xs={12}>
-        <Box component="div" paddingLeft="16px" sx={classesSx.h3Div}>
-          <Box component='span' marginTop="24px">
-            <Typography sx={classesSx.timeZone}>Local Timezone</Typography>
-            <Typography
-              variant="h3"
-              sx={classesSx.timeText}
-            >
-              {weather && timeStampConverter(weather.dt, true)}
-            </Typography>
-          </Box>
 
-          <Box component='span' marginTop="24px">
-            <Typography sx={classesSx.timeZone}>GMT Timezone</Typography>
-            <Typography
-              variant="h3"
-              sx={classesSx.timeText}
-            >
-              {weather && timeStampConverter(weather.dt, true, true)}
-            </Typography>
-          </Box>
-
-          <Box component="span">
-            <Search searchCallback={searchCallback} />
-          </Box>
-        </Box>
-        <Typography variant="h6" sx={classesSx.dateString}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Box component='div' sx={classesSx.timeBoxStyles}>
+              <Typography sx={classesSx.timeZone}>
+                {new Date().toTimeString().slice(9)}
+              </Typography>
+              <Typography
+                sx={classesSx.timeText}
+              >
+                {weather && timeStampConverter(weather.dt, true)}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6} lg={4}>
+            <Box component='div' sx={classesSx.timeBoxStyles}>
+              <Typography sx={classesSx.timeZone}>UTC Timezone</Typography>
+              <Typography
+                sx={classesSx.timeText}
+              >
+                {weather && timeStampConverter(weather.dt, true, true)}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <Box component="span" sx={classesSx.searchBox}>
+              <Search searchCallback={searchCallback} />
+            </Box>
+          </Grid>
+        </Grid>
+        <Typography sx={classesSx.dateString}>
           {d.toDateString()}
         </Typography>
         <Typography
-          marginLeft="16px"
           variant="h5"
           sx={classesSx.wishText}
         >
@@ -222,13 +243,13 @@ const Weather = () => {
           </Box>
         )}
 
-        <Grid container spacing={1}>
-          <Grid item marginLeft='auto' marginRight='auto'>
+        <Grid container spacing={2} marginTop='8px'>
+          <Grid item sm={7} xs={12}>
             {weather && (
               <AirQualityIndex lat={coordinates.lat} lon={coordinates.lon} />
             )}
           </Grid>
-          <Grid item marginLeft='auto' marginRight='auto'>
+          <Grid item sm={5} xs={12}>
             {parsedWeatherSession && (
               <SunriseAndSunset
                 popularCitiesWeather={parsedWeatherSession && parsedWeatherSession}
@@ -241,16 +262,14 @@ const Weather = () => {
         {weather && (
           <MainBox
             weather={weather}
-            temp={weather.main.temp}
-            wind={weather.wind.speed}
-            humidity={weather.main.humidity}
             defaultCity={defaultCity}
+            searchedCity={coordinates.name}
           />
         )}
         <Box mt={2}></Box>
 
         {parsedWeatherSession && parsedWeatherSession.map((it: any, idx: number) =>
-          <Box component='div' sx={classesSx.windCardBox}>
+          <Box component='div'>
             <WindCard
               key={idx}
               popularCities={it}
@@ -259,13 +278,18 @@ const Weather = () => {
         )}
       </Grid>
 
-      <Box component='div' sx={classesSx.footer} >
-          <Typography variant='h6'>
+      {/* <Box component='div' sx={classesSx.footer} >
+          <Typography>
             Design reference -
-            <a href='https://dribbble.com/shots/16206037-Skyler-Weather-Dashboard-Day-Mode/attachments/8066465?mode=media' target='_blank'> Design Link </a>
+            <a href='https://dribbble.com/shots/16206037-Skyler-Weather-Dashboard-Day-Mode/attachments/8066465?mode=media' target='_blank' rel="noreferrer"> (Link) </a>
           </Typography>
-      </Box>
+          <Typography>
+            API Used -
+            <a href='https://openweathermap.org/api/' target='_blank' rel="noreferrer"> (Link) </a>
+          </Typography>
+      </Box> */}
     </Grid>
+    </Box>
   );
 };
 

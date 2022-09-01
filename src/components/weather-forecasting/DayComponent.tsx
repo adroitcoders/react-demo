@@ -1,15 +1,16 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 //services
 import { getFiveDayForecast } from './Services';
 
+import Colors from './Colors';
+
 
 const classesSx = {
   dayCard: {
-    display: "inline-block",
-    margin: "16px",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.colorPrimary,
     padding: "16px",
     borderRadius: "24px",
     textAlign: "center",
@@ -24,13 +25,11 @@ const classesSx = {
     boxShadow: 'rgb(99 99 99 / 20%) 0px 2px 8px 0px'
   },
   dayCardCurrent: {
-    display: "inline-block",
-    margin: "16px",
-    backgroundColor: "#84abfe",
+    backgroundColor: Colors.colorContent,
     padding: "16px",
     borderRadius: "24px",
     textAlign: "center",
-    color: '#FFFFFF',
+    color: Colors.colorPrimary,
     "& svg": {
       height: "56px",
       width: "56px",
@@ -76,24 +75,30 @@ const DayComponent = (props: any) => {
   var date = new Date();
 
   return (
-    <>
+    <Box component='div' marginTop='16px'>
+      <Grid container spacing={2}>
       {dayData &&
         dayData.map((day: any, idx: number) => (
-          <Box component="div"
-            sx={dayConversion(day.dt_txt.split(" ")[0]) === days[date.getDay()] ?  classesSx.dayCardCurrent  : classesSx.dayCard} key={idx}>
+          <Grid item width={{xs: '50%', sm: '20%'}}
+            key={idx}
+          >
+            <Box component='div' sx={dayConversion(day.dt_txt.split(" ")[0]) === days[date.getDay()] ?  classesSx.dayCardCurrent  : classesSx.dayCard}> 
             <img
               src={`/images/${day.weather[0].icon}.png`}
               height='100px'
               width='100px'
+              alt=''
             />
             <Box component="div">
               {" "}
               {dayConversion(day.dt_txt.split(" ")[0])}{" "}
             </Box>
             <Box component="div"> {day.main.temp}°C </Box>
-          </Box>
+            </Box> 
+          </Grid>
         ))}
-    </>
+        </Grid>
+    </Box>
   );
 };
 

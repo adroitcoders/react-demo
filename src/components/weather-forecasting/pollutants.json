@@ -1,0 +1,158 @@
+{
+  "pm2": [
+    {
+      "min": 0,
+      "max": 30,
+      "quality": 1
+    },
+    {
+      "min": 31,
+      "max": 60,
+      "quality": 2
+    },
+    {
+      "min": 61,
+      "max": 90,
+      "quality": 3
+    },
+    {
+      "min": 91,
+      "max": 120,
+      "quality": 4
+    },
+    {
+      "min": 121,
+      "quality": 5
+    }
+  ],
+  "pm10": [
+    {
+      "min": 0,
+      "max": 50,
+      "quality": 1
+    },
+    {
+      "min": 51,
+      "max": 100,
+      "quality": 2
+    },
+    {
+      "min": 101,
+      "max": 250,
+      "quality": 3
+    },
+    {
+      "min": 251,
+      "max": 350,
+      "quality": 4
+    },
+    {
+      "min": 351,
+      "quality": 5
+    }
+  ],
+  "so2": [
+    {
+      "min": 0,
+      "max": 40,
+      "quality": 1
+    },
+    {
+      "min": 41,
+      "max": 80,
+      "quality": 2
+    },
+    {
+      "min": 81,
+      "max": 380,
+      "quality": 3
+    },
+    {
+      "min": 381,
+      "max": 800,
+      "quality": 4
+    },
+    {
+      "min": 801,
+      "quality": 5
+    }
+  ],
+  "no2": [
+    {
+      "min": 0,
+      "max": 40,
+      "quality": 1
+    },
+    {
+      "min": 41,
+      "max": 80,
+      "quality": 2
+    },
+    {
+      "min": 81,
+      "max": 180,
+      "quality": 3
+    },
+    {
+      "min": 181,
+      "max": 280,
+      "quality": 4
+    },
+    {
+      "min": 281,
+      "quality": 5
+    }
+  ],
+  "o3": [
+    {
+      "min": 0,
+      "max": 50,
+      "quality": 1
+    },
+    {
+      "min": 51,
+      "max": 100,
+      "quality": 2
+    },
+    {
+      "min": 101,
+      "max": 168,
+      "quality": 3
+    },
+    {
+      "min": 169,
+      "max": 208,
+      "quality": 4
+    },
+    {
+      "min": 209,
+      "quality": 5
+    }
+  ],
+  "co": [
+    {
+      "min": 0,
+      "max": 100,
+      "quality": 1
+    },
+    {
+      "min": 101,
+      "max": 200,
+      "quality": 2
+    },
+    {
+      "min": 201,
+      "max": 300,
+      "quality": 3
+    },
+    {
+      "min": 301,
+      "max": 370,
+      "quality": 4
+    },
+    {
+      "min": 370,
+      "quality": 5
+    }
+  ]
+}
