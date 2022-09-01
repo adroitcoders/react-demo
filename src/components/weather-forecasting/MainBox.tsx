@@ -4,14 +4,14 @@ import ThermostatIcon from "@mui/icons-material/Thermostat";
 import Typography from "@mui/material/Typography";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
+import Colors from './Colors'
+
 const classesSx = {
   mainBox: {
-    backgroundColor: "#84abfe",
+    backgroundColor: Colors.colorContent,
     borderRadius: "12px",
     textAlign: "center",
     padding: "24px",
-    margin: "16px",
-    marginTop: "24px",
     boxShadow: 'rgb(99 99 99 / 20%) 0px 2px 8px 0px'
   },
   icon: {
@@ -19,23 +19,23 @@ const classesSx = {
       height: "100px",
       width: "100px",
       "& path": {
-        fill: "#FFF",
+        fill: Colors.colorPrimary,
       },
     },
   },
   date: {
     fontSize: "18px",
-    color: "#FFFFFF",
+    color: Colors.colorPrimary,
     fontWeight: 500,
   },
   temp: {
     fontSize: "60px",
     fontWeight: 700,
-    color: "#FFFFFF",
+    color: Colors.colorPrimary,
   },
   type: {
     fontSize: "24px",
-    color: "#FFFFFF",
+    color: Colors.colorPrimary,
     fontWeight: 700,
     marginTop: "16px",
     marginBottom: "10px",
@@ -44,17 +44,17 @@ const classesSx = {
     display: "flex",
     justifyContent: "center",
     marginBottom: "5px",
-    color: "#fff",
+    color: Colors.colorPrimary,
     fontWeight: 500,
     "& svg": {
-      fill: "#FFFFFF",
+      fill: Colors.colorPrimary,
       marginRight: '5px',
     },
   },
   topCityName: {
     fontSize: "24px",
     fontWeight: 500,
-    color: "#FFFFFF",
+    color: Colors.colorPrimary,
     textAlign: "left",
     display: "flex",
     alignItems: "center",
@@ -87,12 +87,13 @@ const MainBox = (props: any) => {
       <Box component="div" sx={classesSx.mainBox}>
         <Typography sx={classesSx.topCityName}>
           <FmdGoodIcon />
-          {props.weather.name ? props.weather.name : props.defaultCity}
+          {props.searchedCity ? props.searchedCity : props.defaultCity}
         </Typography>
         <img
           src={`/images/${props.weather.weather[0].icon}.png`}
           height='100px'
           width='100px'
+          alt=''
         />
         <Box component="div" sx={classesSx.date}>
           Today, {d.getDate()} {months[d.getMonth()]}

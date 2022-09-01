@@ -10,10 +10,11 @@ import FmdGoodIcon from "@mui/icons-material/FmdGood";
 //utils
 import { timeStampConverter } from "./utils";
 
+import Colors from './Colors';
+
 const classesSx = {
   box: {
-    display: "inline-block",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.colorPrimary,
     borderRadius: "12px",
     padding: "16px",
     marginBottom: "16px",
@@ -21,7 +22,7 @@ const classesSx = {
   },
   styleBox: {
     padding: "12px",
-    backgroundColor: "#fff8f0",
+    backgroundColor: Colors.colorSunBg,
     borderRadius: "12px",
     marginBottom: "12px",
   },
@@ -30,11 +31,11 @@ const classesSx = {
     alignItems: "center",
     marginRight: '40px',
     "& svg": {
-      fill: "#ffb560",
+      fill: Colors.colorSunIcon,
       height: "36px",
       width: "36px",
       "& path": {
-        fill: "#ffb560",
+        fill: Colors.colorSunIcon,
       },
     },
   },
@@ -44,11 +45,11 @@ const classesSx = {
   sunrise: {
     fontSize: "14px",
     fontWeight: 500,
-    color: "#cbcfdf",
+    color: Colors.colorGreyish,
   },
   time: {
     fontWeight: 500,
-    color: "#84abfe",
+    color: Colors.colorSunText,
   },
   cityName: {
     fontWeight: 500,
@@ -59,7 +60,7 @@ const classesSx = {
     height: "20px",
     width: "20px",
     marginRight: "4px",
-    fill: "#84abfe",
+    fill: Colors.colorSunText,
     verticalAlign: "sub",
   },
   infoBox: {
@@ -68,7 +69,6 @@ const classesSx = {
 };
 
 const SunriseAndSunset = (props: any) => {
-  console.log("sunrise and sunset component >>>> ");
 
   return (
     <Box component="div" sx={classesSx.box}>

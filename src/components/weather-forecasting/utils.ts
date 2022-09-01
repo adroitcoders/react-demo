@@ -1,4 +1,7 @@
 import cities from './cities.json'
+import pollutants from './pollutants.json'
+
+import Colors from './Colors'
 
 export const timeStampConverter = (timeStamp: any, secs? : boolean, utc?: boolean) => {
   var date = new Date(timeStamp * 1000);
@@ -48,6 +51,7 @@ export const addCitiesToSession = (entry: any) => {
       if(city.name === entry.name){
         isExists = true
       }
+      return false;
     })
 
     if(existingCitiesArr.length > 3 && !isExists){
@@ -74,4 +78,49 @@ export const suggestions = (value: string) => {
   let filteredList =  cities.filter((city: any, idx: any) => city.startsWith(word))
 
   return filteredList.slice(0, 20);
+}
+
+export const colorCodeAirQuality = (quality: number) => {
+  let color = ''
+    
+    if(quality === 4 || quality === 5){
+      color = Colors.colorDanger
+    }
+    else if (quality === 3) {
+      color = Colors.colorFair 
+    }
+    else {
+      color = Colors.colorAirInfo
+    }
+    
+    return color
+}
+
+export const pollutantColorGenerator= (pollutant: string, value: number) => {
+  let qualityNumber = Math.round(value)
+  let colorHexVal = {
+    text: '',
+    bg: ''
+  }
+
+  const qualityState = (pollutants as any)[pollutant].filter((row: any, idx: number) => {
+    if(row.max){
+      return  (qualityNumber >= row.min && qualityNumber <= row.max)
+    } else {
+      return  qualityNumber >= row.min
+    }
+  })
+
+  if(qualityState[0].quality === 4 || qualityState[0].quality === 5){
+    colorHexVal.text = Colors.colorDanger
+    colorHexVal.bg = Colors.colorDangerBg
+  } else if (qualityState[0].quality === 3) {
+    colorHexVal.text = Colors.colorFair
+    colorHexVal.bg = Colors.colorFairBg
+  } else {
+    colorHexVal.text = Colors.colorAirInfo
+    colorHexVal.bg = Colors.colorAirInfoBg
+  }
+
+  return colorHexVal
 }

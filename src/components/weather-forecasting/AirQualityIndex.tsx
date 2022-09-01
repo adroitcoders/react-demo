@@ -1,6 +1,7 @@
 import React from "react";
 
 //mui
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import AirIcon from "@mui/icons-material/Air";
@@ -8,34 +9,29 @@ import AirIcon from "@mui/icons-material/Air";
 //services
 import { getAirPollutionInfo } from './Services';
 
+//utils
+import { colorCodeAirQuality, pollutantColorGenerator } from './utils';
+
+import Colors from './Colors';
+
 const classesSx = {
   box: {
-    display: "inline-block",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.colorPrimary,
     borderRadius: "12px",
-    '@media only screen and (max-width: 600px)': {
-      margin: '20px'
-    },
     padding: "20px",
     boxShadow: 'rgb(99 99 99 / 20%) 0px 2px 8px 0px'
   },
   singleBox: {
-    display: "inline-block",
-    padding: "16px",
-    backgroundColor: "#edfcf5",
+    padding: "12px",
     borderRadius: "8px",
     textAlign: "center",
-    marginRight: "8px",
-    marginTop: '8px',
   },
   number: {
-    color: "#3dcc93",
     fontWeight: "bold",
     fontSize: "16px",
   },
   measure: {
     marginTop: "3px",
-    color: "#3dcc93",
     fontWeight: 500,
     fontSize: "13px",
   },
@@ -43,20 +39,18 @@ const classesSx = {
     marginTop: "16px",
     marginBottom: "16px",
     display: "flex",
-    "& svg": {
-      width: "42px",
-      height: "42px",
-      fill: "#3dcc93",
-      marginRight: "10px",
-    },
+  },
+  airIcon: {
+    width: '42px',
+    height: '42px',
+    marginRight: '10px'
   },
   walkQuality: {
     fontWeight: 700,
-    color: "#3dcc93",
   },
   walkText: {
     fontSize: "14px",
-    color: "#cbcfdf",
+    color: Colors.colorGreyish,
     marginTop: "-5px",
   },
 };
@@ -84,6 +78,7 @@ const AirQualityIndex = (props: any) => {
             o3: response.components.o3,
             co: response.components.co,
         }); 
+        {Object.entries(airIndex).map(([key, value]) => console.log('key', key, 'vlue', value))}
     })
   }, [props.lat, props.lon]);
 
@@ -91,9 +86,9 @@ const AirQualityIndex = (props: any) => {
     <Box component="div" sx={classesSx.box}>
       <Typography variant="h6">Air Quality Index</Typography>
       <Box component="div" sx={classesSx.messageDiv}>
-        <AirIcon />
+        <AirIcon sx={[classesSx.airIcon, {fill: colorCodeAirQuality(airIndex.quality)}]} />
         <Box component="div">
-          <Typography sx={classesSx.walkQuality}>
+          <Typography sx={[classesSx.walkQuality, {color: colorCodeAirQuality(airIndex.quality)}]}>
             {airIndex.quality === 1 && "Good"}
             {airIndex.quality === 2 && "Fair"}
             {airIndex.quality === 3 && "Moderate"}
@@ -109,63 +104,26 @@ const AirQualityIndex = (props: any) => {
           </Typography>
         </Box>
       </Box>
-      <Box component="div" sx={classesSx.singleBox}>
-        <Box component="div" sx={classesSx.number}>
-          {airIndex.pm2}
-        </Box>
-        <Box component="div" sx={classesSx.measure}>
-          PM2
-        </Box>
-      </Box>
 
-      <Box component="div" sx={classesSx.singleBox}>
-        <Box component="div" sx={classesSx.number}>
-          {airIndex.pm10}
-        </Box>
-        <Box component="div" sx={classesSx.measure}>
-          PM10
-        </Box>
-      </Box>
-
-      <Box component="div" sx={classesSx.singleBox}>
-        <Box component="div" sx={classesSx.number}>
-          {airIndex.so2}
-        </Box>
-        <Box component="div" sx={classesSx.measure}>
-          SO2
-        </Box>
-      </Box>
-
-      <Box component="div" sx={classesSx.singleBox}>
-        <Box component="div" sx={classesSx.number}>
-          {airIndex.no2}
-        </Box>
-        <Box component="div" sx={classesSx.measure}>
-          NO2
-        </Box>
-      </Box>
-
-      <Box component="div" sx={classesSx.singleBox}>
-        <Box component="div" sx={classesSx.number}>
-          {airIndex.o3}
-        </Box>
-        <Box component="div" sx={classesSx.measure}>
-          O3
-        </Box>
-      </Box>
-
-      <Box
-        component="div"
-        sx={classesSx.singleBox}
-        style={{ marginRight: "0px" }}
-      >
-        <Box component="div" sx={classesSx.number}>
-          {airIndex.co}
-        </Box>
-        <Box component="div" sx={classesSx.measure}>
-          CO
-        </Box>
-      </Box>
+      <Grid container spacing={1}>
+      {Object.entries(airIndex).map(([key, value], idx: number) =>
+        idx !== 0 &&
+        <Grid item xs={4} md={3} lg={2}>
+          <Box component='div' sx={[
+            classesSx.singleBox,
+            {color: pollutantColorGenerator(key, value).text},
+            {backgroundColor: pollutantColorGenerator(key, value).bg}
+          ]}>
+            <Box component="div" sx={classesSx.number}>
+              {value}
+            </Box>
+            <Box component="div" sx={classesSx.measure}>
+              {key.toUpperCase()}
+            </Box>
+          </Box>
+        </Grid>  
+      )}        
+      </Grid>
     </Box>
   );
 };

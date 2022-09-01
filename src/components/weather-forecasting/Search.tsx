@@ -18,9 +18,11 @@ const classesSx = {
   },
   autoComplete: {
     width: '200px',
-    marginRight: '16px',
     '& .MuiOutlinedInput-root': {
         padding: '4px'
+    },
+    '@media only screen and (max-width: 600px)': {
+      width: '100%'
     },
   },
 };
@@ -37,7 +39,7 @@ const Search = (props: any) => {
 
   const getCoordinatesHandle = (cityName: string) => {
     getCoordinates(cityName).then(function (response) {
-      props.searchCallback &&  props.searchCallback(response.lat, response.lon)
+      props.searchCallback &&  props.searchCallback(response.lat, response.lon, response.name)
     });
   };
 
