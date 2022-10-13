@@ -28,9 +28,15 @@ const useStyles = makeStyles({
     borderSpacing: '8px',
   },
   gridItemClassMobile: {
-    display: 'table',
-    height: '50vh',
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    flexWrap: 'wrap',
+    height: 'auto',
     borderSpacing: '8px',
+    position: 'sticky',
+    top: '80px',
+    width: '100%',
+    zIndex: 1,
   },
   title: {
     textAlign: 'center',
@@ -42,6 +48,16 @@ const useStyles = makeStyles({
     color: '#2A2550',
     borderTopLeftRadius: '6px',
     borderTopRighttRadius: '6px',
+  },
+  classTitle: {
+    '@media only screen and (max-width: 600px)': {
+      display: 'block',
+      width: '100%',
+      margin: '8px',
+      position: 'sticky',
+      top: '56px',
+      zIndex: 1,
+    },
   },
   timeRenderer: {
     position: 'absolute',
@@ -67,6 +83,7 @@ const ReducerDemoComponent = () => {
       <div className={classes.header}>
         <span>React Demo App(Reducer)</span>
       </div>
+      {isMobile && <div className={`${classes.title} ${classes.classTitle}`}>Classes</div>}
       <Grid
         item
         lg={3}
@@ -74,7 +91,7 @@ const ReducerDemoComponent = () => {
         xs={12}
         className={isMobile ? classes.gridItemClassMobile : classes.gridItem}
       >
-        <th className={classes.title}>Classes</th>
+        {!isMobile && <th className={classes.title}>Classes</th>}
         {ClassAppTree.map((cls: any, idx: number) => (
           <Class key={idx} id={idx} classNumber={cls.classNo} />
         ))}

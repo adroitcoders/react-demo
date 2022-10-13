@@ -1,0 +1,147 @@
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const { nanoid } = require('nanoid')
+const app = express();
+const port = 4500;
+require('dotenv').config()
+
+const Razorpay = require("razorpay");
+
+const razorpay = new Razorpay({
+  key_id: process.env.RZ_KEY_ID,
+  key_secret: process.env.RZ_KEY_SECRET,
+});
+
+const stripe = require("stripe")(
+  process.env.STRIPE_KEY
+);
+
+app.use(cors());
+app.use(bodyParser.json());
+
+app.get("/", (req, res) => {
+  res.send("backend is running");
+});
+
+//razorpay requests
+
+app.post("/razorpay", async (req, res) => {
+  const payment_capture = 1;
+  let amount;
+  if(req.body.plan === 'Starter'){
+    amount = 200
+  }
+  if(req.body.plan === 'Premium'){
+    amount = 500
+  }
+  if(req.body.plan === 'Premium Plus'){
+    amount = 1000
+  }
+  const currency = "USD";
+
+  const options = {
+    amount: amount * 100,
+    currency,
+    receipt: nanoid(10),
+    payment_capture,
+  };
+
+  console.log('razorpay request body ' , req.body)
+
+  try {
+    const response = await razorpay.orders.create(options);
+    console.log(response);
+    res.json({
+      id: response.id,
+      currency: response.currency,
+      amount: response.amount,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+const plan_id_starter = process.env.RZ_PLAN_ID_STARTER
+const plan_id_premium = process.env.RZ_PLAN_ID_PREMIUM
+const plan_id_premium_plus = process.env.RZ_PLAN_ID_PREMIUM_PLUS
+
+let plan_id;
+let amount;
+
+app.post("/razorpay/subscriptions", async(req, res) => {
+  console.log('request body ' , req)
+  switch (req.body.plan) {
+    case "Starter":
+      plan_id = plan_id_starter;
+      amount = 12000
+      break;
+    case "Premium":
+      plan_id = plan_id_premium;
+      amount = 30000
+      break;
+    case "Premium Plus":
+      plan_id = plan_id_premium_plus;
+      amount = 60000
+      break;
+    default:
+      break;
+  }
+
+  try{
+    const response = await razorpay.subscriptions.create({
+      plan_id: plan_id,
+      total_count : 10,
+      quantity: 1,
+      customer_notify:1,
+      addons:[
+      {
+        item:{
+          name:"Plan charges",
+          amount: amount,
+          currency:"INR"
+        }
+      }],
+    })
+    console.log('subscriptions response backend ' , response)
+    res.json({
+      response
+    });
+  
+  } catch(error) {
+    console.log(error)
+  }
+})
+
+// Stripe requests
+
+app.post("/create-checkout-session", async (req, res) => {
+  console.log("request body", req.body);
+  try {
+    // Create a checkout session with Stripe
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price: req.body.lineItems[0].price,
+          quantity: req.body.lineItems[0].quantity,
+        },
+      ],
+      mode: req.body.lineItems[0].yearly ? "subscription" : "payment",
+      success_url: `${process.env.DOMAIN_URL}payment/stripe/success/invoice`,
+      cancel_url: `${process.env.DOMAIN_URL}payment/stripe/cancel`,
+    });
+
+    res.json({ session });
+  } catch (e) {
+    // If there is an error send it to the client
+    res.status(500).json({ error: e.message });
+  }
+});
+
+
+
+app.listen(port, () => {
+  console.log("app is listening on port " + port);
+});

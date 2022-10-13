@@ -50,8 +50,11 @@ const ReactRazorpay = () => {
 
   //States
   const [paymentInfo, setPaymentInfo] = React.useState(Object);
-  const [subscriptionLink, setSubscriptionLink] = React.useState('')
-  console.log('subscription link ' , subscriptionLink)
+  const [subscription, setSubscription] = React.useState({
+    subscriptionLink: '',
+    subscriptionID: '',
+    fetchSubscriptionBtn: false,
+  });
 
   //Code to load RazorPay
   const Razorpay = useRazorpay();
@@ -66,16 +69,16 @@ const ReactRazorpay = () => {
     },
   });
 
-  const onClickHandler = () => {
+  const onPaymentHandler = async () => {
 
-    axios.post("http://localhost:4500/razorpay", {
+    await axios.post(`${process.env.REACT_APP_DOMAIN_URL}razorpay`, {
       plan: planDetails.membership
     })
     .then(response => {
       orderId = response.data.id
       currency = response.data.currency
       amount = response.data.amount
-    } )
+    })
 
     const options = {
       key: KEY_ID,
@@ -109,7 +112,6 @@ const ReactRazorpay = () => {
         color: "#6A67CE",
       },
     };
-  
 
     var rzPay = new Razorpay(options);
     rzPay.open();
@@ -121,18 +123,40 @@ const ReactRazorpay = () => {
   };
 
   const onSubscriptionsHandler = () => {
-
-    axios.post("http://localhost:4500/razorpay/subscriptions", {
+    axios.post(`${process.env.REACT_APP_DOMAIN_URL}razorpay/subscriptions`, {
       plan: planDetails.membership
     })
     .then(response => {
-      setSubscriptionLink(response.data.response.short_url)
+      setSubscription({
+        subscriptionLink: response.data.response.short_url,
+        subscriptionID: response.data.response.id,
+        fetchSubscriptionBtn: false
+      })
     })
   }
 
+  React.useEffect(() => {
+    if(!paymentInfo.id && !planDetails.yearly){
+      onPaymentHandler();
+    };
+    if(!paymentInfo.id && planDetails.yearly) {
+      onSubscriptionsHandler();
+    };
+  },[]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const fetchSubscription = () => {
+    instance.get(`https://api.razorpay.com/v1/subscriptions/${subscription.subscriptionID}`)
+    .then(response => setPaymentInfo(response.data))
+    setSubscription({...subscription, fetchSubscriptionBtn: false})
+  };
+
+  const fetchButtonVisibility = () => {
+    setSubscription({...subscription, fetchSubscriptionBtn: true})
+  };
+
   return (
     <>
-      {paymentInfo.id && (
+      {(paymentInfo.id && !planDetails.yearly) && (
         <Invoice
           plan={planDetails.membership}
           userDetails={{
@@ -141,31 +165,52 @@ const ReactRazorpay = () => {
           }}
           billingDetails={{
             name: paymentInfo.name ?? userData.name,
-            email: paymentInfo.email,
+            email: paymentInfo.email ?? userData.email,
             paymentMode: "RazorPay",
-            isYearly: "No",
+            isYearly: planDetails.yearly ? "Yes" : "No",
             amount: paymentInfo.amount / 100 + "$",
           }}
         />
       )}
-      {(!paymentInfo.id && !planDetails.yearly) && (
-        <div className={classes.buttonParent}>
-          <StyledButton onClick={onClickHandler}>
-            Checkout with Razorpay
-          </StyledButton>
-        </div>
+      {(paymentInfo.id && planDetails.yearly) && (
+        <Invoice
+          plan={planDetails.membership}
+          userDetails={{
+            name: userData.name,
+            email: userData.email,
+          }}
+          billingDetails={{
+            name: userData.name,
+            email: userData.email,
+            paymentMode: "RazorPay",
+            isYearly: planDetails.yearly ? "Yes" : "No",
+            amount: planDetails.price + "$",
+            billingStartDate: new Date(paymentInfo.start_at * 1000).toDateString(),
+            nextBillingDate: new Date(paymentInfo.end_at * 1000).toDateString(),
+          }}
+        />
       )}
+
       {(!paymentInfo.id && planDetails.yearly) && (
         <div className={classes.buttonParent}>
-          {!subscriptionLink &&
-          <StyledButton onClick={onSubscriptionsHandler}>
-            Subscribe with Razorpay
-          </StyledButton>}
-          {subscriptionLink &&
-            <a href={subscriptionLink}>Please visit the below link to complete subscription</a>
+          {(subscription.subscriptionLink && !subscription.fetchSubscriptionBtn) &&
+            <a 
+              target='_blank' 
+              href={subscription.subscriptionLink}
+              onClick={fetchButtonVisibility}
+            >
+              Please visit the below link to complete subscription
+            </a>
           }
         </div>
       )}
+      {(subscription.fetchSubscriptionBtn && planDetails.yearly) &&
+        <div style={{textAlign: 'center'}}>
+          <StyledButton onClick={fetchSubscription}>
+            Fetch subscription info
+          </StyledButton>
+        </div>
+      }
     </>
   );
 };

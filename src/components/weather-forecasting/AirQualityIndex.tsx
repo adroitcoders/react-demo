@@ -78,7 +78,6 @@ const AirQualityIndex = (props: any) => {
             o3: response.components.o3,
             co: response.components.co,
         }); 
-        {Object.entries(airIndex).map(([key, value]) => console.log('key', key, 'vlue', value))}
     })
   }, [props.lat, props.lon]);
 

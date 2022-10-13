@@ -15,6 +15,9 @@ const useStyles = makeStyles({
     textAlign: 'center',
     marginTop: '10px',
     color: '#FFF',
+    '@media only screen and (max-width: 600px)': {
+      display: 'inline-block',
+    },
   },
   classInfoBtn: {
     '&.firstClass': {
@@ -26,6 +29,12 @@ const useStyles = makeStyles({
     bottom: '2px', 
     right: '2px', 
     fontSize: '10px',
+    '@media only screen and (max-width: 600px)': {
+      position: 'static',
+      display: 'block',
+      width: '100%',
+      marginTop: '5px'
+    },
   },
 })
 
@@ -50,6 +59,13 @@ const StyledButton = styled(Button)({
   },
   '&:focus': {
     backgroundColor: '#002366'
+  },
+  '@media only screen and (max-width: 600px)': {
+    display: 'block',
+    padding: '16px',
+  },
+  '@media only screen and (max-width: 400px)': {
+    padding: '8px',
   },
 });
 
@@ -89,12 +105,12 @@ const Class = (props: ClassNumber) => {
         }`}
       >
         <Typography 
-          variant={isMobile ? 'h5' : 'h4'}
+          variant={isMobile ? 'h6' : 'h4'}
           fontWeight={700}
         >
           Class #{props.classNumber}
         </Typography>
-        <span className={classes.timeRenderer}> time : {d.getTime()} </span>
+        <span className={classes.timeRenderer}> time : {isMobile ? d.getSeconds() : d.getTime()} </span>
       </StyledButton>
     </Box>
   );

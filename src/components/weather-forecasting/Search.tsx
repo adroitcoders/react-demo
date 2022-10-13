@@ -65,7 +65,7 @@ const Search = (props: any) => {
       renderInput={(params) => 
         <TextField 
           {...params} 
-          placeholder="enter city"   
+          placeholder="Enter City"   
           onChange={handleChange}
           value={value}
         />}

@@ -9,6 +9,10 @@ import Colors from './Colors';
 
 const classesSx = {
   box: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '16px',
     backgroundColor: Colors.colorWindInfo,
     borderRadius: "12px",
     padding: "20px",
@@ -21,6 +25,10 @@ const classesSx = {
     boxShadow: 'rgb(99 99 99 / 20%) 0px 2px 8px 0px'
   },
   boxBlue: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: '16px',
     backgroundColor: Colors.colorContent,
     borderRadius: "12px",
     marginRight: "16px",
@@ -41,7 +49,6 @@ const classesSx = {
     verticalAlign: "middle",
   },
   cityBox: {
-    float: "right",
     "& svg": {
       fill: Colors.colorPrimary,
       verticalAlign: "bottom",
@@ -67,31 +74,37 @@ const WindCard = (props: any) => {
           component="div"
           sx={props.background ? classesSx.boxBlue : classesSx.box}
         >
-          <Box component="div" sx={classesSx.eachBox}>
-            <AirIcon sx={classesSx.icons} />
-            <Box component="span">Wind &nbsp; &nbsp; |</Box>
-            <Box component="span">
-              &nbsp; &nbsp; {props.popularCities.wind.speed} km/h
+          <Box component='span'>
+            <Box component="div" sx={classesSx.eachBox}>
+              <AirIcon sx={classesSx.icons} />
+              <Box component="span">Wind &nbsp; &nbsp; |</Box>
+              <Box component="span">
+                &nbsp; &nbsp; {props.popularCities.wind.speed} km/h
+              </Box>
             </Box>
-            <Box component="span" sx={classesSx.cityBox}>
+            <Box component="div" sx={classesSx.eachBox}>
+              <ThermostatIcon sx={classesSx.icons} />
+              <Box component="span">Hum &nbsp; &nbsp; |</Box>
+              <Box component="span">
+                &nbsp; &nbsp; {props.popularCities.main.humidity} %
+              </Box>
+            </Box>
+          </Box>
+
+          <Box component='span'>
+            <Box component="div" sx={classesSx.cityBox}>
               <FmdGoodIcon />
               <Box component="span" sx={classesSx.cityName}>
                 {props.popularCities.name}
               </Box>
             </Box>
-          </Box>
-          <Box component="div" sx={classesSx.eachBox}>
-            <ThermostatIcon sx={classesSx.icons} />
-            <Box component="span">Hum &nbsp; &nbsp; |</Box>
-            <Box component="span">
-              &nbsp; &nbsp; {props.popularCities.main.humidity} %
-            </Box>
-            <Box component="span" sx={classesSx.cityBox}>
-              <Typography sx={classesSx.cityTemp}>
+
+            <Box component="div" sx={classesSx.cityBox}>
+              <Typography sx={classesSx.cityTemp} display='inline-block'>
                 {props.popularCities.main.temp}°C
               </Typography>
             </Box>
-          </Box>
+          </Box>  
         </Box>
       )}
     </>

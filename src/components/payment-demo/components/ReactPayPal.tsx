@@ -40,9 +40,9 @@ const ButtonWrapper = (props: ButtonWrapperProps) => {
   
   let userData = JSON.parse(sessionStorage["react-demo-session-user"]);
 
-  const PPLUS_plan_id = process.env.REACT_APP_PPLUS_PLAN_ID ?? "";
-  const Premium_plan_id = process.env.REACT_APP_PREMIUM_PLAN_ID ?? "";
-  const Starter_plan_id = process.env.REACT_APP_STARTER_PLAN_ID ?? "";
+  const PPLUS_plan_id = process.env.REACT_APP_PAYPAL_PPLUS_PLAN_ID ?? "";
+  const Premium_plan_id = process.env.REACT_APP_PAYPAL_PREMIUM_PLAN_ID ?? "";
+  const Starter_plan_id = process.env.REACT_APP_PAYPAL_STARTER_PLAN_ID ?? "";
 
   let planID: string;
 

@@ -66,8 +66,7 @@ const PaymentOptions = () => {
     navigate(`/payment/${paymentMode.toLowerCase()}`)
   };
 
-  // const paymentModes = ['Paypal', 'Razorpay', 'Stripe']
-  const paymentModes = ['Paypal'];
+  const paymentModes = ['Paypal', 'Razorpay', 'Stripe']
 
   return (
     <div className={classes.parentDiv}>

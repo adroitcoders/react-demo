@@ -190,6 +190,13 @@ const Weather = () => {
   let weatherSession = sessionStorage.getItem('weather')
   let parsedWeatherSession = weatherSession && JSON.parse(weatherSession)
 
+  const dateOptions :Intl.DateTimeFormatOptions = { 
+    weekday: 'short',
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric', 
+};
+
   return (
     <Box component='div' maxWidth='1488px' marginLeft='auto' marginRight='auto' padding='24px'>
     <Grid container spacing={2}>
@@ -225,7 +232,7 @@ const Weather = () => {
           </Grid>
         </Grid>
         <Typography sx={classesSx.dateString}>
-          {d.toDateString()}
+          {d.toLocaleDateString('en-US', dateOptions)}
         </Typography>
         <Typography
           variant="h5"
